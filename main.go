@@ -1,62 +1,50 @@
 package main
 
-import "bufio"
-import "fmt"
-import "os"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
-func main()	{
+func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Welcome to Go_chats")
+
 	for {
-		fmt.Println("1. Send Message between two users")
+		fmt.Println("\n1. Send Message between two users")
 		fmt.Println("2. Broadcast message to all users")
-		fmt.Println("3. Veiw message log of the user")
+		fmt.Println("3. View message log of the user")
 		fmt.Println("4. Exit")
-		fmt.Println("Enter your choice: ")
+		fmt.Print("Enter your choice: ")
+
 		scanner.Scan()
-		choice:=scanner.Text()
+		choice := scanner.Text()
 
 		switch choice {
-			case "1":
-				fmt.Println("Enter the sender Id: ")
-				scanner.Scan()
-				sender_id:=scanner.Text()
+		case "1", "2":
+			senderID := promptForInput(scanner, "Enter the sender ID: ")
+			message := promptForInput(scanner, "Enter the message: ")
 
-				fmt.Println("Enter the receiver Id: ")
-				scanner.Scan()
-				receiver_id:=scanner.Text()
-
-				fmt.Println("Enter the message: ")
-				scanner.Scan()
-				message:=scanner.Text()
-
-				send_message(sender_id, receiver_id, message)
-
-			case "2":
-				fmt.Println("enter the sender Id:")
-				scanner.Scan()
-				sender_id:=scanner.Text()
-
-				fmt.Println("Enter the message: ")
-				scanner.Scan()
-				message:=scanner.Text()
-
-				broadcast_message(sender_id, message)
-
-			case "3":
-				fmt.Println("Enter the user Id: ")
-				scanner.Scan()
-				user_id:=scanner.Text()
-
-				view_messagelog(user_id)
-			
-			case "4":
-				fmt.Println("Exiting Go_chats :(")
-				return
-
-			default:
-				fmt.Println("Oops! That's an invalide response. Please try again.")
-
+			if choice == "1" {
+				receiverID := promptForInput(scanner, "Enter the receiver ID: ")
+				sendMessage(senderID, receiverID, message)
+			} else {
+				broadcastMessage(senderID, message)
+			}
+		case "3":
+			userID := promptForInput(scanner, "Enter the user ID: ")
+			viewMessageLog(userID)
+		case "4":
+			fmt.Println("Exiting Go_chats :(")
+			return
+		default:
+			fmt.Println("Oops! That's an invalid response. Please try again.")
 		}
 	}
+}
+
+func promptForInput(scanner *bufio.Scanner, prompt string) string {
+	fmt.Println(prompt)
+	scanner.Scan()
+	return scanner.Text()
 }

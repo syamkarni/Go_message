@@ -1,68 +1,67 @@
 package main
 
-import "fmt"
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
-type User struct{
-	ID string
+type User struct {
+	ID       string
 	Messages []string
 }
 
 var (
-	users=make(map[string]*User)
-	mu sync.Mutex
+	users = make(map[string]*User)
+	mu    sync.Mutex
 )
 
-func send_message(sender_id, receiver_id, message string){
-	if message=="" {
-		message=cat_fact()
+func sendMessage(senderID, receiverID, message string) {
+	if message == "" {
+		message = catFact()
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
 
-	if _, ok:=users[sender_id]; !ok {
-		users[sender_id]=&User{ID: sender_id}
+	if _, ok := users[senderID]; !ok {
+		users[senderID] = &User{ID: senderID}
 	}
-	
-	if _,ok:=users[receiver_id]; !ok {
-		users[receiver_id]=&User{ID: receiver_id}
+	if _, ok := users[receiverID]; !ok {
+		users[receiverID] = &User{ID: receiverID}
 	}
 
-	f_message:= fmt.Sprintf("User %s sent message: %s", sender_id, message)
-	users[receiver_id].Messages=append(users[receiver_id].Messages, f_message)
-	fmt.Println(f_message)
+	fMessage := fmt.Sprintf("User %s sent message: %s", senderID, message)
+	users[receiverID].Messages = append(users[receiverID].Messages, fMessage)
+	fmt.Println(fMessage)
 }
 
-func broadcast_message(sender_id, message string){
-	if message==""{
-		message=cat_fact()
+func broadcastMessage(senderID, message string) {
+	if message == "" {
+		message = catFact()
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
 
 	for id, user := range users {
-		if id!=sender_id{
-			f_message:=fmt.Sprintf("User %s sent message: %s", sender_id, message)
-			user.Messages=append(user.Messages, f_message)
-			fmt.Println(f_message)
-
+		if id != senderID {
+			fMessage := fmt.Sprintf("User %s sent message: %s", senderID, message)
+			user.Messages = append(user.Messages, fMessage)
+			fmt.Println(fMessage)
 		}
 	}
 }
 
-func view_messagelog(user_id string){
+func viewMessageLog(userID string) {
 	mu.Lock()
 	defer mu.Unlock()
-	
-	if user,ok := users[user_id]; ok{
-		fmt.Println("Message log for the user %s: \n", user_id)
-		for _, msg :=range user.Messages {
+
+	if user, ok := users[userID]; ok {
+		fmt.Printf("Message log for the user %s:\n", userID)
+		for _, msg := range user.Messages {
 			fmt.Println(msg)
 		}
 	} else {
-		fmt.Println("NO messages currently for User %s: \n", user_id)
+		fmt.Printf("No messages currently for User %s:\n", userID)
 	}
-
 }
