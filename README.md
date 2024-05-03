@@ -9,6 +9,10 @@ Go Chats is a command-line messaging application built in Go, facilitating commu
 - **View Message Log**: Users can view their received messages anytime during the session.
 - **Exit**: Allows users to exit the application.
 
+![Send Message](assets/c1.png)
+![Broadcast Message](assets/c2.png)
+![View Message](assets/c3.png)
+
 ## Files in the Repository
 - **main.go**: The entry point of the application, handling user interactions and controlling the application flow.
 - **messages.go**: Manages users and messages, including sending, broadcasting, and retrieving messages.
@@ -27,6 +31,8 @@ Go Chats is a command-line messaging application built in Go, facilitating commu
 ### api.go
 - **Purpose**: Provides functionality to fetch random facts from the catfact.ninja API, used for generating messages when users send empty inputs.
 - **Importance**: Enhances the application by integrating external content, demonstrating the application’s ability to utilize web APIs for dynamic content generation.
+
+![Cat Fact API Here](assets/cfact.png)
 
 ## Running the application
 To run this application, ensure you have Go installed on your machine. Clone the repository
