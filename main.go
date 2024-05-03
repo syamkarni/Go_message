@@ -35,10 +35,10 @@ func main() {
 			userID := promptForInput(scanner, "Enter the user ID: ")
 			viewMessageLog(userID)
 		case "4":
-			fmt.Println("Exiting Go_chats :(")
+			fmt.Println("Leaving so soon? :( Hope to see you back soon! Goodbye!")
 			return
 		default:
-			fmt.Println("Oops! That's an invalid response. Please try again.")
+			fmt.Println("Oops! That didn't compute. Try again, please? :)")
 		}
 	}
 }

@@ -45,7 +45,7 @@ func broadcastMessage(senderID, message string) {
 
 	for id, user := range users {
 		if id != senderID {
-			fMessage := fmt.Sprintf("User %s sent message: %s", senderID, message)
+			fMessage := fmt.Sprintf("Hey, you've got mail from User %s: %s :)", senderID, message)
 			user.Messages = append(user.Messages, fMessage)
 			fmt.Println(fMessage)
 		}
@@ -57,7 +57,8 @@ func viewMessageLog(userID string) {
 	defer mu.Unlock()
 
 	if user, ok := users[userID]; ok {
-		fmt.Printf("Message log for the user %s:\n", userID)
+		fmt.Printf("Diving into your messages, User %s! Here we go: :)\n", userID)
+
 		for _, msg := range user.Messages {
 			fmt.Println(msg)
 		}
